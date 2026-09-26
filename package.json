@@ -1,0 +1,32 @@
+{
+  "name": "encrypted-backups",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Cross-platform, client-side encrypted backups to your own SFTP server.",
+  "author": "Encrypted Backups contributors",
+  "desktopName": "encrypted-backups",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build && electron-builder",
+    "build:app": "vue-tsc && vite build && electron-builder --dir",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@lucide/vue": "^1.47.0",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.9",
+    "electron": "^44.4.5",
+    "electron-builder": "^26.15.3",
+    "typescript": "^5.2.2",
+    "vite": "^8.3.0",
+    "vite-plugin-electron": "^1.1.2",
+    "vue-tsc": "^2.0.26"
+  },
+  "main": "dist-electron/main.js"
+}
