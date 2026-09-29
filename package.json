@@ -7,7 +7,7 @@
   "desktopName": "encrypted-backups",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node scripts/dev.mjs",
     "build": "vue-tsc && vite build && electron-builder",
     "build:app": "vue-tsc && vite build && electron-builder --dir",
     "preview": "vite preview",
