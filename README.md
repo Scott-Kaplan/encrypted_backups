@@ -8,32 +8,85 @@ This is an early application shell, not a finished backup product. The overview 
 
 The intended security model is client-side encryption with a passphrase for normal use and a separately stored recovery key. Scheduled runs are intended to retrieve the unlock secret from the operating system's secure credential store. Each backup run is intended to create an independently restorable archive. SFTP host keys must be explicitly trusted and changes must be surfaced to the user. These are requirements, not current guarantees.
 
-## Development prerequisites
+## Windows 11
 
-- Node.js 22 or newer and npm
-- The operating-system build prerequisites documented by Electron Builder for the package target being built
+### Run from source
 
-## Run the desktop app
+Install Git and Node.js 22.12 or newer, then open PowerShell in the project directory:
 
-Install dependencies once, then launch the development GUI:
-
-```sh
-npm install
+```powershell
+npm ci
 npm run dev
 ```
 
-This starts Vite and Electron together and opens the Encrypted Backups window. Keep the terminal open while using the app; press `Ctrl+C` there to stop it. The current GUI supports selecting source folders, but does not yet create or restore backups.
+This opens the desktop app. Keep PowerShell open while using it; press `Ctrl+C` to stop the development server and app.
 
-Check TypeScript/Vue types and create a production build:
+### Build and install
+
+Build on Windows 11 to create the x64 installer:
+
+```powershell
+npm run typecheck
+npm run build
+```
+
+Run `release\0.1.0\Encrypted Backups-Windows-0.1.0-Setup.exe` and follow the installer. The installer is not code-signed yet, so Windows SmartScreen may show a warning.
+
+## Ubuntu MATE 24.04
+
+### Run from source
+
+Install Git and Node.js 22.12 or newer, then open a terminal in the project directory:
+
+```sh
+npm ci
+npm run dev
+```
+
+This opens the desktop app. Keep the terminal open while using it; press `Ctrl+C` to stop the development server and app.
+
+### Build and run
+
+Build on Ubuntu to create the AppImage:
+
+```sh
+npm run typecheck
+npm run build
+chmod +x "release/0.1.0/Encrypted Backups-Linux-0.1.0.AppImage"
+"./release/0.1.0/Encrypted Backups-Linux-0.1.0.AppImage"
+```
+
+If the AppImage reports that FUSE is unavailable, install the Ubuntu 24.04 FUSE compatibility package (`libfuse2t64`) and try again. The GUI currently supports selecting folders but does not create or restore backups.
+
+## macOS
+
+### Run from source
+
+Install Git, Node.js 22.12 or newer, and Xcode Command Line Tools. Open Terminal in the project directory:
+
+```sh
+npm ci
+npm run dev
+```
+
+This opens the desktop app. Keep Terminal open while using it; press `Control+C` to stop the development server and app.
+
+### Build and install
+
+Build on macOS to create the DMG:
 
 ```sh
 npm run typecheck
 npm run build
 ```
 
-`npm run build` creates the platform's distributable (AppImage on Linux, DMG on macOS, and NSIS installer on Windows). Cross-platform installers should be built on their target operating system or a documented CI image; a Linux build does not validate macOS or Windows packaging.
+Open `release/0.1.0/Encrypted Backups-Mac-0.1.0-Installer.dmg`, then drag the app into Applications. The app is not signed or notarized yet, so macOS may block the first launch with a security warning.
 
-For a packaged application directory without a distributable installer, run `npm run build:app`.
+## Current limitations
+
+The current GUI supports selecting source folders, but it does not create or restore backups. Encryption, recovery-key setup, OS credential storage, SFTP connection and host-key verification, archive creation, scheduling, snapshot history, and restore are not implemented. Do not rely on this version to protect data.
+
+Build each installer on its target operating system or a documented CI image; building on one platform does not validate installers for the others. `npm run build:app` creates a packaged application directory without a distributable installer.
 
 ## Security boundaries
 
