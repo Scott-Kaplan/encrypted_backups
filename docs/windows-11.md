@@ -9,7 +9,7 @@ These steps use **Git Bash** for every command. They assume Git Bash and Visual 
 3. Close and reopen Git Bash and Visual Studio Code so they pick up the updated `PATH`.
 4. In Git Bash, verify Node.js and npm are available:
 
-```powershell
+```bash
 node --version
 npm --version
 ```
@@ -26,8 +26,6 @@ cd ~/source
 git clone https://github.com/Scott-Kaplan/encrypted_backups.git
 cd encrypted_backups
 ```
-
-If you already have a clone, use `cd` in Git Bash to change to that repository directory instead.
 
 ## 3. Open the project in Visual Studio Code
 
