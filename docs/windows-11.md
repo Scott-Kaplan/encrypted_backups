@@ -23,7 +23,7 @@ In Git Bash, move to the directory where you want to keep the project, clone it,
 ```bash
 mkdir -p ~/source
 cd ~/source
-git clone https://github.com/Scott-Kaplan/encrypted_backups.git
+git clone git@github.com:Scott-Kaplan/encrypted_backups.git
 cd encrypted_backups
 ```
 

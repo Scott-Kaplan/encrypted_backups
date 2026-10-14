@@ -24,7 +24,7 @@ chmod +x "release/0.1.0/Encrypted Backups-Linux-0.1.0.AppImage"
 "./release/0.1.0/Encrypted Backups-Linux-0.1.0.AppImage"
 ```
 
-If the AppImage reports that FUSE is unavailable, install the Ubuntu 24.04 FUSE compatibility package (`libfuse2t64`) and try again.
+If the AppImage reports that FUSE is unavailable, install the Ubuntu FUSE compatibility package (`libfuse2t64`) and try again.
 
 ## Current limitations
 
