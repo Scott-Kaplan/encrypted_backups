@@ -24,20 +24,9 @@ In Git Bash, move to the directory where you want to keep the project, clone it,
 mkdir -p ~/source
 cd ~/source
 git clone git@github.com:Scott-Kaplan/encrypted_backups.git
-cd encrypted_backups
 ```
 
-## 3. Open the project in Visual Studio Code
-
-From the project directory in Git Bash, run:
-
-```bash
-code .
-```
-
-If Git Bash reports that `code` is not found, open Visual Studio Code from the Start menu and choose **File > Open Folder**, then select the `encrypted_backups` directory. Continue running the commands below in Git Bash.
-
-## 4. Install dependencies and launch the GUI
+## 4. Install dependencies
 
 In Git Bash, confirm you are at the project root, then install the locked dependencies and start the app:
 
@@ -48,30 +37,3 @@ npm run dev
 ```
 
 The Encrypted Backups window should open. Keep the Git Bash window open while using the development app. Press `Ctrl+C` in Git Bash to stop it.
-
-## 5. Build and install the Windows application (optional)
-
-Stop the development app with `Ctrl+C`, then build the x64 Windows installer from the project root:
-
-```bash
-npm run typecheck
-npm run build
-```
-
-The installer is created at:
-
-```text
-release/0.1.0/Encrypted Backups-Windows-0.1.0-Setup.exe
-```
-
-Launch the installer from Git Bash:
-
-```bash
-explorer.exe "$(cygpath -w 'release/0.1.0/Encrypted Backups-Windows-0.1.0-Setup.exe')"
-```
-
-Follow the installer prompts. The installer is not code-signed yet, so Windows SmartScreen may show a warning.
-
-## Current limitations
-
-The GUI currently supports selecting source folders, but does not create or restore backups. Encryption, SFTP, scheduling, and restore are not implemented. Do not rely on this version to protect data.
