@@ -21,8 +21,9 @@ Node.js must be version 22.12 or newer.
 In Git Bash, move to the directory where you want to keep the project, clone it, and enter the new directory:
 
 ```bash
-mkdir -p ~/source
-cd ~/source
+cd /c/
+mkdir -p github
+cd github
 git clone git@github.com:Scott-Kaplan/encrypted_backups.git
 ```
 
