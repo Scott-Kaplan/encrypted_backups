@@ -32,7 +32,7 @@ git clone git@github.com:Scott-Kaplan/encrypted_backups.git
 In Git Bash, confirm you are at the project root, then install the locked dependencies and start the app:
 
 ```bash
-pwd
+cd /c/github/encrypted_backups
 npm ci
 npm run dev
 ```
