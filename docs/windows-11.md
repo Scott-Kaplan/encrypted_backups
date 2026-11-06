@@ -33,7 +33,7 @@ In Git Bash, confirm you are at the project root, then install the locked depend
 
 ```bash
 cd /c/github/encrypted_backups
-npm ci
+npm ci # clean install
 npm run dev
 ```
 
