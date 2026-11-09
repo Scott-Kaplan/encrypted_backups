@@ -27,7 +27,7 @@ cd github
 git clone git@github.com:Scott-Kaplan/encrypted_backups.git
 ```
 
-## 4. Install dependencies
+## 3. Install dependencies
 
 In Git Bash, confirm you are at the project root, then install the locked dependencies and start the app:
 

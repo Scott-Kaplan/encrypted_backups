@@ -1,29 +1,41 @@
 # macOS
 
-## Prerequisites
+These steps use **Terminal** for every command. They assume Terminal and Visual Studio Code are already installed.
 
-Install Git, Node.js 22.12 or newer, and Xcode Command Line Tools. Open Terminal in the project directory.
+## 1. Install Node.js
 
-## Run from source
+1. Download the current Node.js LTS macOS Installer (`.pkg`) from [nodejs.org](https://nodejs.org/en/download).
+2. Run the installer.
+3. Install Xcode Command Line Tools if prompted, or run `xcode-select --install` in Terminal to install them. They provide Git and the tools needed to build native dependencies.
+4. Close and reopen Terminal and Visual Studio Code so they pick up the updated `PATH`.
+5. In Terminal, verify Node.js and npm are available:
 
 ```sh
+node --version
+npm --version
+```
+
+Node.js must be version 22.12 or newer.
+
+## 2. Get the project
+
+In Terminal, move to the directory where you want to keep the project, clone it, and enter the new directory:
+
+```sh
+cd ~
+mkdir -p github
+cd github
+git clone git@github.com:Scott-Kaplan/encrypted_backups.git
+```
+
+## 3. Install dependencies
+
+In Terminal, confirm you are at the project root, then install the locked dependencies and start the app:
+
+```sh
+cd ~/github/encrypted_backups
 npm ci
 npm run dev
 ```
 
-This opens the desktop app. Keep Terminal open while using it; press `Control+C` to stop the development server and app.
-
-## Build and install
-
-Build on macOS to create the DMG:
-
-```sh
-npm run typecheck
-npm run build
-```
-
-Open `release/0.1.0/Encrypted Backups-Mac-0.1.0-Installer.dmg`, then drag the app into Applications. The app is not signed or notarized yet, so macOS may block the first launch with a security warning.
-
-## Current limitations
-
-The GUI currently supports selecting source folders, but does not create or restore backups. Do not rely on this version to protect data.
+The Encrypted Backups window should open. Keep the Terminal window open while using the development app. Press `Control+C` in Terminal to stop it.
