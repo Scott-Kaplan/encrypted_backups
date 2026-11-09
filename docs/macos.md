@@ -1,6 +1,6 @@
 # macOS
 
-These steps use **Terminal** for every command. They assume Terminal and Visual Studio Code are already installed.
+These steps assume that you have Visual Studio Code already installed.
 
 ## 1. Install Node.js
 
