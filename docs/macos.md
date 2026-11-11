@@ -7,7 +7,7 @@ These steps assume that you have Visual Studio Code already installed.
 1. Download the current Node.js LTS macOS Installer (`.pkg`) from [nodejs.org](https://nodejs.org/en/download).
 2. Run the installer.
 3. Install Xcode Command Line Tools if prompted, or run `xcode-select --install` in Terminal to install them. They provide Git and the tools needed to build native dependencies.
-4. Close all terminals in Visual Studio Code and open a new one, so they pick up the updated `PATH`.
+4. Close all terminals in Visual Studio Code and open a new one, so it picks up the updated `PATH`.
 5. In Terminal, verify Node.js and npm are available:
 
 ```sh
