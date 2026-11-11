@@ -18,7 +18,7 @@ Node.js must be version 22.12 or newer.
 
 ## 2. Get the project
 
-In Terminal, move to the directory where you want to keep the project, clone it, and enter the new directory:
+In the terminal, move to the directory where you want to keep the project, clone it, and enter the new directory:
 
 ```sh
 cd ~
