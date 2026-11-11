@@ -29,7 +29,7 @@ git clone git@github.com:Scott-Kaplan/encrypted_backups.git
 
 ## 3. Install dependencies
 
-In Terminal, confirm you are at the project root, then install the locked dependencies and start the app:
+In the terminal, confirm you are at the project root, then install the locked dependencies and start the app:
 
 ```sh
 cd ~/github/encrypted_backups
@@ -37,4 +37,4 @@ npm ci
 npm run dev
 ```
 
-The Encrypted Backups window should open. Keep the Terminal window open while using the development app. Press `Control+C` in Terminal to stop it.
+The Encrypted Backups window should open. Keep the terminal window open while using the development app. Press `Control+C` in the terminal to stop it.
