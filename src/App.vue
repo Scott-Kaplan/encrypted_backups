@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import {
   Archive,
   ArrowUpRight,
@@ -25,6 +25,22 @@ const activeSection = ref<Section>('overview')
 const selectedFolders = ref<string[]>([])
 const pickerBusy = ref(false)
 const pickerError = ref('')
+const appVersionLabel = ref('')
+
+onMounted(async () => {
+  try {
+    const appInfo = await window.encryptedBackups.getAppInfo()
+    const platformName = {
+      win32: 'Windows',
+      darwin: 'Mac',
+      linux: 'Ubuntu',
+    }[appInfo.platform]
+
+    appVersionLabel.value = `${platformName ?? 'Desktop'} app version: ${appInfo.version}`
+  } catch {
+    appVersionLabel.value = 'Desktop app version unavailable'
+  }
+})
 
 const pageTitle = computed(() => ({
   overview: 'Overview',
@@ -273,8 +289,8 @@ function removeFolder(path: string) {
       </div>
 
       <footer class="app-footer">
+        <span class="footer-version">{{ appVersionLabel }}</span>
         <span><span class="footer-dot"></span> Ready on this device</span>
-        <span>Encrypted Backups <span class="footer-version">0.1.0</span></span>
       </footer>
     </main>
   </div>

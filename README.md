@@ -1,6 +1,6 @@
 # Encrypted Backups
 
-A cross-platform desktop foundation for encrypted backups to an SFTP server you control. The intended targets are Ubuntu MATE 24.04, macOS, and Windows.
+A cross-platform desktop foundation for encrypted backups to an SFTP server you control. The intended targets are Ubuntu MATE 26.04, macOS, and Windows.
 
 ## Current status
 
@@ -11,7 +11,7 @@ The intended security model is client-side encryption with a passphrase for norm
 ## Install and run
 
 - [Windows 11](docs/windows-11.md)
-- [Ubuntu MATE 24.04](docs/ubuntu-mate-24.04.md)
+- [Ubuntu MATE 26.04](docs/ubuntu-mate.md)
 - [macOS](docs/macos.md)
 
 Build each installer on its target operating system or a documented CI image; building on one platform does not validate installers for the others. `npm run build:app` creates a packaged application directory without a distributable installer.

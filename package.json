@@ -1,7 +1,7 @@
 {
   "name": "encrypted-backups",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.92",
   "description": "Cross-platform, client-side encrypted backups to your own SFTP server.",
   "author": "Encrypted Backups contributors",
   "desktopName": "encrypted-backups",

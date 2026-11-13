@@ -1,4 +1,4 @@
-# Ubuntu MATE 24.04
+# Ubuntu MATE 26.04
 
 ## Prerequisites
 

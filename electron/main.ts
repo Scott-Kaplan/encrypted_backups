@@ -31,6 +31,11 @@ ipcMain.handle('backup:select-source-folders', async () => {
   return selection.canceled ? [] : selection.filePaths
 })
 
+ipcMain.handle('app:get-info', () => ({
+  platform: process.platform,
+  version: app.getVersion(),
+}))
+
 let win: BrowserWindow | null
 
 function createWindow() {

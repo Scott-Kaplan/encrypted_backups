@@ -173,9 +173,9 @@ button:disabled { cursor: not-allowed; }
 .empty-page p { margin: 0 0 18px; color: #768179; font-size: 11px; }
 .text-link { display: inline-flex; align-items: center; gap: 5px; padding: 0; border: 0; color: #466d4b; background: transparent; font-size: 10px; font-weight: 750; cursor: pointer; }
 .app-footer { min-height: 38px; display: flex; align-items: center; justify-content: space-between; padding: 0 42px; border-top: 1px solid #e7ebe6; color: #8d9790; background: #f8f9f7; font-size: 9px; }
-.app-footer > span:first-child { display: flex; align-items: center; gap: 6px; }
+.app-footer > span:last-child { display: flex; align-items: center; gap: 6px; }
 .footer-dot { width: 6px; height: 6px; border-radius: 50%; background: #78a16b; }
-.footer-version { margin-left: 5px; color: #acb3ad; }
+.footer-version { color: #718078; }
 
 @keyframes page-enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes spin { to { transform: rotate(360deg); } }

@@ -6,6 +6,7 @@ declare global {
 	interface Window {
 		encryptedBackups: {
 			selectSourceFolders(): Promise<string[]>
+			getAppInfo(): Promise<{ platform: string; version: string }>
 		}
 	}
 }
