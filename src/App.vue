@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   Trash2,
 } from '@lucide/vue'
+import revisionsText from './revisions.ts?raw'
 
 type Section = 'overview' | 'backup-sets' | 'restore'
 
@@ -26,6 +27,11 @@ const selectedFolders = ref<string[]>([])
 const pickerBusy = ref(false)
 const pickerError = ref('')
 const appVersionLabel = ref('')
+
+function getRevisionNumber() {
+  const revisionComments = [...revisionsText.matchAll(/^\s*\/\/\s*(\d+)\b/gm)]
+  return revisionComments[revisionComments.length - 1]?.[1]
+}
 
 onMounted(async () => {
   try {
@@ -36,7 +42,11 @@ onMounted(async () => {
       linux: 'Ubuntu',
     }[appInfo.platform]
 
-    appVersionLabel.value = `${platformName ?? 'Desktop'} app version: ${appInfo.version}`
+    const revisionNumber = getRevisionNumber()
+    const versionPrefix = appInfo.version.split('.').slice(0, 2).join('.')
+    const version = revisionNumber ? `${versionPrefix}.${revisionNumber}` : appInfo.version
+
+    appVersionLabel.value = `${platformName ?? 'Desktop'} app version: ${version}`
   } catch {
     appVersionLabel.value = 'Desktop app version unavailable'
   }

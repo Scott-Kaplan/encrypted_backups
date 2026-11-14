@@ -1,1 +1,1 @@
-// 92 adds platform-specific app version to the lower-left Home Screen (Windows, Mac, Ubuntu)
+// 1 Initial Version (Windows, Mac, Ubuntu)
