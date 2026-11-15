@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import {
   Archive,
   ArrowUpRight,
@@ -7,6 +7,7 @@ import {
   ChevronRight,
   CircleAlert,
   Clock3,
+  Download,
   Folder,
   FolderPlus,
   HardDrive,
@@ -19,6 +20,7 @@ import {
   Trash2,
 } from '@lucide/vue'
 import revisionsText from './revisions.ts?raw'
+import type { UpdateStatus } from './update-types'
 
 type Section = 'overview' | 'backup-sets' | 'restore'
 
@@ -27,6 +29,8 @@ const selectedFolders = ref<string[]>([])
 const pickerBusy = ref(false)
 const pickerError = ref('')
 const appVersionLabel = ref('')
+const updateStatus = ref<UpdateStatus>({ state: 'disabled' })
+let removeUpdateStatusListener: (() => void) | undefined
 
 function getRevisionNumber() {
   const revisionComments = [...revisionsText.matchAll(/^\s*\/\/\s*(\d+)\b/gm)]
@@ -34,8 +38,17 @@ function getRevisionNumber() {
 }
 
 onMounted(async () => {
+  let receivedUpdateEvent = false
+  removeUpdateStatusListener = window.encryptedBackups.onUpdateStatus((status) => {
+    receivedUpdateEvent = true
+    updateStatus.value = status
+  })
+
   try {
-    const appInfo = await window.encryptedBackups.getAppInfo()
+    const [appInfo, initialUpdateStatus] = await Promise.all([
+      window.encryptedBackups.getAppInfo(),
+      window.encryptedBackups.getUpdateStatus(),
+    ])
     const platformName = {
       win32: 'Windows',
       darwin: 'Mac',
@@ -47,10 +60,13 @@ onMounted(async () => {
     const version = revisionNumber ? `${versionPrefix}.${revisionNumber}` : appInfo.version
 
     appVersionLabel.value = `${platformName ?? 'Desktop'} app version: ${version}`
+    if (!receivedUpdateEvent) updateStatus.value = initialUpdateStatus
   } catch {
     appVersionLabel.value = 'Desktop app version unavailable'
   }
 })
+
+onBeforeUnmount(() => removeUpdateStatusListener?.())
 
 const pageTitle = computed(() => ({
   overview: 'Overview',
@@ -79,6 +95,17 @@ async function addSourceFolders() {
 
 function removeFolder(path: string) {
   selectedFolders.value = selectedFolders.value.filter((folder) => folder !== path)
+}
+
+async function installAvailableUpdate() {
+  if (updateStatus.value.state !== 'available') return
+
+  updateStatus.value = { state: 'downloading', percent: 0 }
+  try {
+    await window.encryptedBackups.installUpdate()
+  } catch {
+    updateStatus.value = { state: 'error' }
+  }
 }
 </script>
 
@@ -299,7 +326,23 @@ function removeFolder(path: string) {
       </div>
 
       <footer class="app-footer">
-        <span class="footer-version">{{ appVersionLabel }}</span>
+        <div class="footer-left">
+          <span class="footer-version">{{ appVersionLabel }}</span>
+          <button
+            v-if="updateStatus.state === 'available'"
+            class="update-button"
+            type="button"
+            @click="installAvailableUpdate"
+          >
+            <Download :size="13" /> Update Available
+          </button>
+          <span v-else-if="updateStatus.state === 'downloading'" class="update-progress">
+            Downloading update {{ updateStatus.percent }}%
+          </span>
+          <span v-else-if="updateStatus.state === 'installing'" class="update-progress">
+            Restarting to install update
+          </span>
+        </div>
         <span><span class="footer-dot"></span> Ready on this device</span>
       </footer>
     </main>

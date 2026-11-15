@@ -1,5 +1,7 @@
 /// <reference types="vite-plugin-electron/electron-env" />
 
+declare const __MAC_AUTO_UPDATES_ENABLED__: boolean
+
 declare namespace NodeJS {
   interface ProcessEnv {
     /**

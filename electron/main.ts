@@ -1,6 +1,8 @@
 import { app, BrowserWindow, dialog, ipcMain } from 'electron'
+import { autoUpdater } from 'electron-updater'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import type { UpdateStatus } from '../src/update-types'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -36,7 +38,52 @@ ipcMain.handle('app:get-info', () => ({
   version: app.getVersion(),
 }))
 
+let updateStatus: UpdateStatus = { state: 'disabled' }
+
+function setUpdateStatus(status: UpdateStatus) {
+  updateStatus = status
+  if (win && !win.isDestroyed()) {
+    win.webContents.send('update:status', status)
+  }
+}
+
+ipcMain.handle('app:get-update-status', () => updateStatus)
+ipcMain.handle('app:install-update', async () => {
+  if (updateStatus.state !== 'available') return
+
+  setUpdateStatus({ state: 'downloading', percent: 0 })
+  try {
+    await autoUpdater.downloadUpdate()
+  } catch {
+    setUpdateStatus({ state: 'error' })
+  }
+})
+
 let win: BrowserWindow | null
+
+function configureAutoUpdater() {
+  if (!app.isPackaged) return
+  if (process.platform === 'darwin' && !__MAC_AUTO_UPDATES_ENABLED__) {
+    setUpdateStatus({ state: 'disabled' })
+    return
+  }
+
+  autoUpdater.autoDownload = false
+  autoUpdater.autoInstallOnAppQuit = false
+  autoUpdater.allowPrerelease = false
+  autoUpdater.on('checking-for-update', () => setUpdateStatus({ state: 'checking' }))
+  autoUpdater.on('update-available', (info) => setUpdateStatus({ state: 'available', version: info.version }))
+  autoUpdater.on('update-not-available', () => setUpdateStatus({ state: 'current' }))
+  autoUpdater.on('download-progress', (progress) => {
+    setUpdateStatus({ state: 'downloading', percent: Math.floor(progress.percent) })
+  })
+  autoUpdater.on('update-downloaded', () => {
+    setUpdateStatus({ state: 'installing' })
+    autoUpdater.quitAndInstall(false, true)
+  })
+  autoUpdater.on('error', () => setUpdateStatus({ state: 'error' }))
+  void autoUpdater.checkForUpdates().catch(() => setUpdateStatus({ state: 'error' }))
+}
 
 function createWindow() {
   win = new BrowserWindow({
@@ -88,4 +135,7 @@ app.on('activate', () => {
   }
 })
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  createWindow()
+  configureAutoUpdater()
+})

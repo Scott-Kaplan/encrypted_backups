@@ -4,6 +4,14 @@
   "appId": "org.encryptedbackups.desktop",
   "asar": true,
   "productName": "Encrypted Backups",
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "Scott-Kaplan",
+      "repo": "encrypted_backups",
+      "releaseType": "release"
+    }
+  ],
   "directories": {
     "output": "release/${version}"
   },
@@ -13,7 +21,8 @@
   ],
   "mac": {
     "target": [
-      "dmg"
+      "dmg",
+      "zip"
     ],
     "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
   },

@@ -1,10 +1,15 @@
 # Encrypted Backups
 
+> [!WARNING]
+> **WORK IN PROGRESS: THIS APPLICATION IS INCOMPLETE AND IS NOT READY FOR REAL-WORLD USE.** Backup creation, encryption, SFTP transfer, scheduling, and restore are not implemented. Do not entrust important data to this application or rely on it to protect or recover files. Features may be missing, incomplete, or changed without notice.
+
 A cross-platform desktop foundation for encrypted backups to an SFTP server you control. The intended targets are Ubuntu MATE 26.04, macOS, and Windows.
 
 ## Current status
 
 This is an early application shell, not a finished backup product. The overview UI and native multi-folder picker work. Encryption, recovery-key setup, OS credential storage, SFTP connection and host-key verification, archive creation, scheduling, snapshot history, and restore are not implemented. Do not rely on this version to protect data.
+
+Automatic updates use stable GitHub Releases from `Scott-Kaplan/encrypted_backups`. The repository must be public for installed apps to check for releases. macOS update checks are disabled by default; enable them only on a signed and notarized Mac release build with `MAC_AUTO_UPDATES_ENABLED=true npm run build`.
 
 The intended security model is client-side encryption with a passphrase for normal use and a separately stored recovery key. Scheduled runs are intended to retrieve the unlock secret from the operating system's secure credential store. Each backup run is intended to create an independently restorable archive. SFTP host keys must be explicitly trusted and changes must be surfaced to the user. These are requirements, not current guarantees.
 
