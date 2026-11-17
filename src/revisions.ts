@@ -1,2 +1,1 @@
-// 1 Initial Version (Windows, Mac, Ubuntu)
-// 2 Adds stable release updates (Windows, Ubuntu; Mac after signing)
+// 1.0.1 Establishes the first base version (Windows, Mac, Ubuntu)

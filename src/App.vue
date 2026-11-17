@@ -32,8 +32,8 @@ const appVersionLabel = ref('')
 const updateStatus = ref<UpdateStatus>({ state: 'disabled' })
 let removeUpdateStatusListener: (() => void) | undefined
 
-function getRevisionNumber() {
-  const revisionComments = [...revisionsText.matchAll(/^\s*\/\/\s*(\d+)\b/gm)]
+function getRevisionVersion() {
+  const revisionComments = [...revisionsText.matchAll(/^\s*\/\/\s*(\d+\.\d+\.\d+)\b/gm)]
   return revisionComments[revisionComments.length - 1]?.[1]
 }
 
@@ -55,9 +55,7 @@ onMounted(async () => {
       linux: 'Ubuntu',
     }[appInfo.platform]
 
-    const revisionNumber = getRevisionNumber()
-    const versionPrefix = appInfo.version.split('.').slice(0, 2).join('.')
-    const version = revisionNumber ? `${versionPrefix}.${revisionNumber}` : appInfo.version
+    const version = getRevisionVersion() ?? appInfo.version
 
     appVersionLabel.value = `${platformName ?? 'Desktop'} app version: ${version}`
     if (!receivedUpdateEvent) updateStatus.value = initialUpdateStatus

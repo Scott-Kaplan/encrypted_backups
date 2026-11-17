@@ -21,6 +21,10 @@ The intended security model is client-side encryption with a passphrase for norm
 
 Build each installer on its target operating system or a documented CI image; building on one platform does not validate installers for the others. `npm run build:app` creates a packaged application directory without a distributable installer.
 
+## Publishing a tested release
+
+Append a full semantic version and a short change summary to `src/revisions.ts`, then run `npm run dev` and test the app. When the version is approved, set `GH_TOKEN` in your environment and run `npm run ship`. The script synchronizes the package version from the last revision entry, builds the installer for the current operating system, and publishes it as a stable GitHub Release. Run it on each target operating system to add Windows, Mac, and Ubuntu artifacts to the same versioned release. The GitHub repository must be public for installed apps to access updates; never commit the token. On Mac, enable updater checks only for signed and notarized builds with `MAC_AUTO_UPDATES_ENABLED=true`.
+
 ## Security boundaries
 
 Renderer code has no Node integration. Electron context isolation and sandboxing are enabled. The preload exposes a narrow, typed folder-picker operation; backup, encryption, secret storage, and SFTP capabilities must be implemented in the main process or an appropriately isolated native helper. Never pass passphrases, recovery keys, private keys, or unrestricted filesystem/network APIs into the renderer.
